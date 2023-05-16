@@ -22,10 +22,12 @@ const ItemContent = ({
 }) => {
     const dispatch = useDispatch();
 
-    const openATD = () => {
+    const openATD = (e) => {
         dispatch(aboutTheDataActions.showAboutTheData());
         dispatch(slideoutActions.setLastOpenedSlideout('atd'));
+        e.preventDefault();
     };
+
     return (
         <div className="dropdown-section__wrapper">
             <div className="dropdown-section__top-columns">
@@ -65,7 +67,11 @@ const ItemContent = ({
                                 {section2Items.map((item, index) => (
                                     <>
                                         <li key={`second-section-link-${uniqueId(index)}`}>
-                                            <Link className="dropdown--item__link" to={item.url !== "?about-the-data" ? item.url : ''} onMouseUp={item.url !== '?about-the-data' ? '' : openATD}>
+                                            <Link
+                                                className="dropdown--item__link"
+                                                to={item.url !== "?about-the-data" ? item.url : ''}
+                                                onClick={item.url !== '?about-the-data' ? '' : openATD}
+                                                onMouseUp={item.url !== '?about-the-data' ? '' : openATD}>
                                                 {item.icon && item.icon !== '' && item.icon !== null ? <FontAwesomeIcon size="lg" className="" icon={item.icon} /> : ''}
                                                 <div className="dropdown-item__link-desc">
                                                     <div className="dropdown-item__link-label">
