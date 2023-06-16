@@ -12,7 +12,7 @@ const dropdownRoot = ({ animatingOut, direction }) => {
     if (!animatingOut && direction) {
         return {
             transformOrigin: "0 0",
-            animationDuration: '450ms',
+            animationDuration: '325ms',
             /* use 'forwards' to prevent flicker on leave animation */
             animationFillMode: "forwards",
             /* flex styles will center the caret child component */
@@ -26,7 +26,7 @@ const dropdownRoot = ({ animatingOut, direction }) => {
     return {
         transformOrigin: "0 0",
         animationName: getDropdownRootKeyFrame(animatingOut),
-        animationDuration: '450ms',
+        animationDuration: '325ms',
         /* use 'forwards' to prevent flicker on leave animation */
         animationFillMode: "forwards",
         /* flex styles will center the caret child component */

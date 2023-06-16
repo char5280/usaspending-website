@@ -25,7 +25,7 @@ const getPosition = (animatingOut) => {
 const fadeContainer = (duration, animatingOut, direction) => {
     if (!direction) {
         return {
-            animationDuration: '450ms',
+            animationDuration: '325ms',
             animationFillMode: "forwards",
             position: getPosition(animatingOut),
             opacity: getOpacity(direction, animatingOut),
@@ -37,7 +37,7 @@ const fadeContainer = (duration, animatingOut, direction) => {
 
     return {
         animationName: getFadeContainerKeyFrame(animatingOut, direction),
-        animationDuration: '450ms',
+        animationDuration: '325ms',
         animationFillMode: "forwards",
         position: getPosition(animatingOut),
         opacity: getOpacity(direction, animatingOut),
