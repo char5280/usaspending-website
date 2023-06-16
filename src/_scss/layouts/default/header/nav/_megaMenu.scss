@@ -331,7 +331,7 @@
   }
 
   .fade-container {
-    animation-duration: 300ms;
+    animation-duration: 390ms;
   }
 
   .dropdown-section__bottom-portion .dropdown-section__section-list {
@@ -398,14 +398,14 @@
     }
 
     to {
-      transform: translateX(25px);
+      transform: translateX(40px);
       opacity: 0;
     }
   }
 
   @keyframes fade-content-animate-in-left {
     from {
-      transform: translateX(25px);
+      transform: translateX(40px);
     }
 
     to {
@@ -416,7 +416,7 @@
 
   @keyframes fade-content-animate-in-right {
     from {
-      transform: translateX(-25px);
+      transform: translateX(-40px);
     }
 
     to {
