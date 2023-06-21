@@ -29,7 +29,7 @@ const fadeContainer = (duration, animatingOut, direction) => {
             animationFillMode: "forwards",
             position: getPosition(animatingOut),
             opacity: getOpacity(direction, animatingOut),
-            animationTimingFunction: "easeOutExpo",
+            animationTimingFunction: "linear",
             top: "0",
             left: "0"
         };
@@ -41,7 +41,7 @@ const fadeContainer = (duration, animatingOut, direction) => {
         animationFillMode: "forwards",
         position: getPosition(animatingOut),
         opacity: getOpacity(direction, animatingOut),
-        animationTimingFunction: "easeOutExpo",
+        animationTimingFunction: "linear",
         top: "0",
         left: "0"
     };
