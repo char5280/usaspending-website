@@ -46,7 +46,7 @@ const NavbarWrapper = () => {
 
     const hideMobileNav = () => {
     // re-enable body scrolling
-        document.querySelector('body').classList.remove('show-mobile-nav');
+    //     document.querySelector('body').classList.remove('show-mobile-nav');
         setShowMobileNav(false);
         setMobileNavInitialState(true);
     };
@@ -95,7 +95,7 @@ const NavbarWrapper = () => {
                         {showMobileNav && (
                             <CSSTransition
                                 classNames="mobile-nav-slide"
-                                timeout={{ enter: 225, exit: 225 }}>
+                                timeout={{ enter: 1000, exit: 1000 }}>
                                 <MobileNav
                                     hideMobileNav={hideMobileNav}
                                     mobileNavInitialState={mobileNavInitialState}

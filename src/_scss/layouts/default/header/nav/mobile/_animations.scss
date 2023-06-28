@@ -2,21 +2,37 @@
     // slide in animation
     @keyframes mobileNavEnter {
         // slide in from top
-        0% {
-            transform: translate(0, -100vh);
+        //0% {
+        //    transform: translate(0, -100vh);
+        //}
+        //100% {
+        //    transform: translate(0, 0);
+        //}
+        from {
+            top: 100px;
+            bottom: 80%;
         }
-        100% {
-            transform: translate(0, 0);
+        to {
+            top: 100px;
+            bottom: 0;
         }
     }
 
     @keyframes mobileNavExit {
         // slide out to top
-        0% {
-            transform: translate(0, 0);
+        //0% {
+        //    transform: translate(0, 0);
+        //}
+        //100% {
+        //    transform: translate(0, -100vh);
+        //}
+        from {
+            top: 100px;
+            bottom: 0;
         }
-        100% {
-            transform: translate(0, -100vh);
+        to {
+            top: 100px;
+            bottom: 80%;
         }
     }
 
@@ -33,11 +49,11 @@
     }
 
     .mobile-nav-slide-enter, .mobile-nav-slide-enter-active {
-        @include animation(mobileNavEnter 0.225s ease-in forwards);
+        @include animation(mobileNavEnter 1s ease-in forwards);
     }
 
     .mobile-nav-slide-exit, .mobile-nav-slide-exit-active {
-        @include animation(mobileNavExit 0.225s ease-in forwards);
+        @include animation(mobileNavExit 1s ease-in forwards);
     }
 
     .mobile-nav-side-slide-enter, .mobile-nav-side-slide-enter-active {
