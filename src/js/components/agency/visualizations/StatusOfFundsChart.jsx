@@ -180,6 +180,9 @@ const StatusOfFundsChart = ({
         else if (level === 2) {
             return <><hr /><div className="tooltip__text-note">Click a Treasury Account to view <br />Program Activities or Object Classes</div></>;
         }
+        else if (level === 3) {
+            return <><hr /><div className="tooltip__text-note">Click bar to view <br />Program Activity or Object Class</div></>;
+        }
         return null;
     };
 
@@ -204,15 +207,24 @@ const StatusOfFundsChart = ({
     let tooltipName = null;
     const tooltip = (data) => {
         if (hoverData) {
-            if (data.name.length <= 33) {
-                tooltipName = data.name.length + 230;
+            if (level < 3) {
+                if (data.name.length <= 33) {
+                    tooltipName = data.name.length + 230;
+                }
+                else if (data.name.length > 33 && data.name.length < 66) {
+                    tooltipName = data.name.length + 215;
+                }
+                else {
+                    tooltipName = data.name.length + 200;
+                }
             }
-            else if (data.name.length > 33 && data.name.length < 66) {
-                tooltipName = data.name.length + 215;
-            }
-            else {
+            else if (level === 3) {
                 tooltipName = data.name.length + 200;
             }
+            else {
+                tooltipName = data.name.length + 125;
+            }
+
             return (
                 <div className="sof-chart-tooltip">
                     <div className="tooltip__title">
@@ -329,16 +341,8 @@ const StatusOfFundsChart = ({
             const maxNegObl = negativeObligationsArray.length ? negativeObligationsArray.reduce((a, b) => Math.max(Math.abs(a), Math.abs(b))) : null;
 
             const arrayOfMaxValues = [];
-            if (negativeTbr) {
-                arrayOfMaxValues.push(maxNegTbr);
-            }
-            else arrayOfMaxValues.push(maxPosTbr);
-            if (negativeObl) {
-                arrayOfMaxValues.push(maxNegObl);
-            }
-            else {
-                arrayOfMaxValues.push(maxPosObl);
-            }
+            arrayOfMaxValues.push(Math.abs(maxNegTbr) > Math.abs(maxPosTbr) ? maxNegTbr : maxPosTbr);
+            arrayOfMaxValues.push(Math.abs(maxNegObl) > Math.abs(maxPosObl) ? maxNegObl : maxPosObl);
 
             if (negativeTbr || negativeObl) {
                 x.domain(d3.extent(arrayOfMaxValues)).nice(2);
@@ -695,16 +699,8 @@ const StatusOfFundsChart = ({
             const maxNegOutlay = negativeOutlaysArray.length ? negativeOutlaysArray.reduce((a, b) => Math.max(Math.abs(a), Math.abs(b))) : null;
 
             const arrayOfMaxValues = [];
-            if (negativeTbr) {
-                arrayOfMaxValues.push(maxNegTbr);
-            }
-            else arrayOfMaxValues.push(maxPosTbr);
-            if (negativeOutlay) {
-                arrayOfMaxValues.push(maxNegOutlay);
-            }
-            else {
-                arrayOfMaxValues.push(maxPosOutlay);
-            }
+            arrayOfMaxValues.push(Math.abs(maxNegTbr) > Math.abs(maxPosTbr) ? maxNegTbr : maxPosTbr);
+            arrayOfMaxValues.push(Math.abs(maxNegOutlay) > Math.abs(maxPosOutlay) ? maxNegOutlay : maxPosOutlay);
 
             if (negativeTbr || negativeOutlay) {
                 x.domain(d3.extent(arrayOfMaxValues)).nice(2);
