@@ -48,7 +48,7 @@ export default class Header extends React.Component {
                         icon={<FontAwesomeIcon style={{ width: "20", height: "20" }} size="lg" icon="exclamation-triangle" color="#fdb81e" />}
                         borderTopColor="#fdb81e"
                         backgroundColor="#fff1d2"
-                        notDismissable
+                        id="header_1"
                         title={<>Experiencing Issues with Downloads?</>}
                         content={<>We are working to get our Advanced Search and Custom Award Data downloads running properly as soon as possible. Thank you for your patience!</>} />
 
@@ -57,6 +57,7 @@ export default class Header extends React.Component {
                         borderTopColor="#97d4ea"
                         borderBottomColor="#c3ebfa"
                         backgroundColor="#e1f3f8"
+                        id="header_2"
                         title={<>New congressional district data available</>}
                         content={<>USAspending.gov now has new congressional district data as a result of the 2020 census. Districts are identified sitewide as “current” or “submitted” (i.e., original). <AboutTheDataLink slug="congressional-district-data">Learn more about redistricting and the changes you’ll find on the site.</AboutTheDataLink></>} />
                     <GovBanner />
