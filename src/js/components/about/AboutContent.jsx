@@ -47,7 +47,7 @@ const aboutSections = [
 ];
 
 const AboutContent = () => {
-    const history = useHistory();
+    // const history = useHistory();
     const query = useQueryParams();
 
     const [activeSection, setActiveSection] = useState(query.section || 'mission');
@@ -61,24 +61,27 @@ const AboutContent = () => {
         const conditionalOffset = window.scrollY < getStickyBreakPointForSidebar() ? stickyHeaderHeight : 10;
         const sectionTop = (sectionDom.offsetTop - stickyHeaderHeight - conditionalOffset);
         scrollToY(sectionTop + 15, 700);
+        window.location.assign(`/about?section=${section}`);
         setActiveSection(section);
     };
 
-    useEffect(throttle(() => {
-        // prevents a console error about react unmounted component leak
-        let isMounted = true;
-        if (isMounted) {
-            const urlSection = query.section;
-            if (urlSection) {
-                jumpToSection(urlSection);
-                // remove the query param from the url after scrolling to the given section
-                history.replace(`/about`);
-            }
-        }
-        return () => {
-            isMounted = false;
-        };
-    }, 100), [history, query.section]);
+    // useEffect(throttle(() => {
+    //     // todo - confirm that this block is doing anything
+    //     // prevents a console error about react unmounted component leak
+    //     let isMounted = true;
+    //     if (isMounted) {
+    //         const urlSection = query.section;
+    //         console.log('urlSection', urlSection);
+    //         if (urlSection) {
+    //             jumpToSection(urlSection);
+    //             // remove the query param from the url after scrolling to the given section
+    //             history.replace(`/about`);
+    //         }
+    //     }
+    //     return () => {
+    //         isMounted = false;
+    //     };
+    // }, 100), [history, query.section]);
 
     return (
         <div className="about-content-wrapper">
