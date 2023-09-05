@@ -27,6 +27,8 @@ import BaseSpendingByCategoryResult from 'models/v2/search/visualizations/rank/B
 
 import { categoryNames, defaultScopes } from 'dataMapping/search/spendingByCategory';
 
+import withAgencySlugs from "../../../agency/WithAgencySlugs";
+
 const combinedActions = Object.assign({}, searchFilterActions, {
     setAppliedFilterCompletion
 });
@@ -35,7 +37,8 @@ const propTypes = {
     reduxFilters: PropTypes.object,
     setAppliedFilterCompletion: PropTypes.func,
     noApplied: PropTypes.bool,
-    subaward: PropTypes.bool
+    subaward: PropTypes.bool,
+    agencySlugs: PropTypes.object
 };
 
 export class RankVisualizationWrapperContainer extends React.Component {
@@ -343,6 +346,8 @@ export class RankVisualizationWrapperContainer extends React.Component {
     }
 
     render() {
+        console.log('this.props.agencySlugs', this.props.agencySlugs);
+
         const visualization = this.generateVisualization();
 
         const fieldTypes = [
@@ -373,12 +378,13 @@ export class RankVisualizationWrapperContainer extends React.Component {
 }
 
 RankVisualizationWrapperContainer.propTypes = propTypes;
+const RankVisualizationWrapperContainerWithRouter = withRouter(withAgencySlugs(RankVisualizationWrapperContainer));
 
-export default withRouter(connect(
+export default connect(
     (state) => ({
         reduxFilters: state.appliedFilters.filters,
         noApplied: state.appliedFilters._empty,
         subaward: state.searchView.subaward
     }),
     (dispatch) => bindActionCreators(combinedActions, dispatch)
-)(RankVisualizationWrapperContainer));
+)(RankVisualizationWrapperContainerWithRouter);
