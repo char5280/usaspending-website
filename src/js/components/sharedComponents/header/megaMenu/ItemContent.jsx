@@ -1,12 +1,13 @@
 import React from "react";
 import { useDispatch } from 'react-redux';
 import { FlexGridRow } from 'data-transparency-ui';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { uniqueId } from 'lodash';
 import * as aboutTheDataActions from 'redux/actions/aboutTheDataSidebar/aboutTheDataActions';
 import * as slideoutActions from 'redux/actions/slideouts/slideoutActions';
 import FadeContents from "./FadeContents";
+import { getNewUrlForGlossary } from '../../../../helpers/glossaryHelper';
 
 const ItemContent = React.memo(({
     navbarConfig,
@@ -22,6 +23,7 @@ const ItemContent = React.memo(({
         dispatch(slideoutActions.setLastOpenedSlideout('atd'));
         e.preventDefault();
     };
+    const { pathname, search } = useLocation();
 
     return <>
         {navbarConfig.map((section, i) => {
@@ -112,7 +114,15 @@ const ItemContent = React.memo(({
                                                     className={menuIndex > 1 ? 'list__extra-padding' : ''}>
                                                     <Link
                                                         className="dropdown--item__link"
-                                                        to={item.url !== "?about-the-data" ? item.url : ''}
+                                                        to={() => {
+                                                            if (item.url === "?about-the-data") {
+                                                                return '';
+                                                            }
+                                                            else if (item.url === "?glossary") {
+                                                                return getNewUrlForGlossary(pathname, item.url, search);
+                                                            }
+                                                            return item.url;
+                                                        }}
                                                         onClick={(e) => {
                                                             if (item.url === '?about-the-data') openATD(e);
                                                         }}
