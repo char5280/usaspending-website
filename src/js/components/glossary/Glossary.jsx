@@ -33,9 +33,6 @@ const Glossary = (props) => {
     let sidebarHeaderRef = useRef(null);
 
     const measureAvailableHeight = (useCallback(() => {
-        // const sidebarHeight = document.getElementById('glossary-sidebar')?.getBoundingClientRect().height || 0;
-        // const headerHeight = document.getElementById('glossary-sidebar-header')?.getBoundingClientRect().height || 0;
-
         const sidebarHeight = sidebarRef.getBoundingClientRect().height;
         const headerHeight = sidebarHeaderRef.getBoundingClientRect().height;
 
@@ -113,8 +110,6 @@ const Glossary = (props) => {
                     sidebarRef = div;
                 }}>
                 <div
-                    id="glossary-sidebar-header"
-                    className="glossary-header-wrapper"
                     ref={(div) => {
                         sidebarHeaderRef = div;
                     }}>
