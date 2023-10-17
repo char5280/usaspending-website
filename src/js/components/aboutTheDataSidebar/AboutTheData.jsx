@@ -3,7 +3,7 @@
  * Created by Nick Torres 11/2/22
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import * as aboutTheDataActions from 'redux/actions/aboutTheDataSidebar/aboutTheDataActions';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -39,6 +39,9 @@ const AboutTheData = (props) => {
     const [searchResults, setSearchResults] = useState(schema);
     const dispatch = useDispatch();
     const [zIndexClass, setZIndexClass] = useState(null);
+
+    let sidebarRef = useRef(null);
+    let sidebarHeaderRef = useRef(null);
 
     const { input, results } = useSelector((state) => state.aboutTheDataSidebar.search);
     const { lastOpenedSlideout } = useSelector((state) => state.slideouts);
@@ -112,11 +115,10 @@ const AboutTheData = (props) => {
     };
 
     const measureAvailableHeight = () => {
-        const paddingBottom = 200;
-        const wrapperHeight = document.getElementById('usa-atd-wrapper')?.getBoundingClientRect().height || 0;
-        const headerHeight = document.getElementById('usa-atd-header')?.getBoundingClientRect().height || 0;
+        const wrapperHeight = sidebarRef.getBoundingClientRect().height;
+        const headerHeight = sidebarHeaderRef.getBoundingClientRect().height;
 
-        const sidebarHeight = wrapperHeight - headerHeight - paddingBottom;
+        const sidebarHeight = wrapperHeight - headerHeight;
 
         setHeight(sidebarHeight);
     };
@@ -142,12 +144,13 @@ const AboutTheData = (props) => {
         props.setAboutTheDataTerm(section.fields[index]);
     };
 
-    const content = Object.keys(searchResults).length === 0 ? (
-        <>
-            <DownloadButton />
-            <AboutTheDataNoResults searchTerm={searchTerm} />
-        </>
-    )
+    const content = Object.keys(searchResults).length === 0 ?
+        (
+            <>
+                <DownloadButton />
+                <AboutTheDataNoResults searchTerm={searchTerm} />
+            </>
+        )
         :
         (
             <>
@@ -205,9 +208,7 @@ const AboutTheData = (props) => {
 
     useEffect(() => {
         measureAvailableHeight();
-        if (scrollbar) {
-            scrollbar.scrollToTop();
-        }
+        scrollbar?.scrollToTop();
     }, [drilldown, scrollbar]);
 
     useEffect(() => {
@@ -226,17 +227,25 @@ const AboutTheData = (props) => {
             <aside
                 role="dialog"
                 aria-labelledby="atd-title"
-                className="atd-sidebar">
+                className="atd-sidebar"
+                ref={(div) => {
+                    sidebarRef = div;
+                }}>
+                <div
+                    ref={(div) => {
+                        sidebarHeaderRef = div;
+                    }}>
+                    <AboutTheDataHeader
+                        closeAboutTheData={closeAboutTheData}
+                        searchTerm={searchTerm}
+                        setSearchTerm={setSearchTerm}
+                        performSearch={performSearch}
+                        clearSearch={clearSearch} />
+                </div>
                 {isLoading || searchResultsPending ?
                     <><LoadingWrapper isLoading /></>
                     :
                     <>
-                        <AboutTheDataHeader
-                            closeAboutTheData={closeAboutTheData}
-                            searchTerm={searchTerm}
-                            setSearchTerm={setSearchTerm}
-                            performSearch={performSearch}
-                            clearSearch={clearSearch} />
                         <Scrollbars
                             style={{ height }}
                             renderTrackVertical={track}
@@ -255,12 +264,14 @@ const AboutTheData = (props) => {
                                     <div className="atd__body">
                                         {content}
                                     </div>
-                                </>}
+                                </>
+                            }
                         </Scrollbars>
                     </>
                 }
             </aside>
-        </div>);
+        </div>
+    );
 };
 
 AboutTheData.propTypes = propTypes;
