@@ -3,7 +3,7 @@
  * Created by Kevin Li 4/28/17
  */
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -29,9 +29,15 @@ const Glossary = (props) => {
     const [scrollbar, setScrollbar] = useState(null);
     const [loadingContent, setLoadingContent] = useState('');
 
+    let sidebarRef = useRef(null);
+    let sidebarHeaderRef = useRef(null);
+
     const measureAvailableHeight = (useCallback(() => {
-        const sidebarHeight = document.getElementById('glossary-sidebar')?.getBoundingClientRect().height || 0;
-        const headerHeight = document.getElementById('glossary-sidebar-header')?.getBoundingClientRect().height || 0;
+        // const sidebarHeight = document.getElementById('glossary-sidebar')?.getBoundingClientRect().height || 0;
+        // const headerHeight = document.getElementById('glossary-sidebar-header')?.getBoundingClientRect().height || 0;
+
+        const sidebarHeight = sidebarRef.getBoundingClientRect().height;
+        const headerHeight = sidebarHeaderRef.getBoundingClientRect().height;
 
         setContentHeight(sidebarHeight - headerHeight);
     }));
@@ -102,10 +108,16 @@ const Glossary = (props) => {
                 id="glossary-sidebar"
                 role="dialog"
                 aria-labelledby="glossary-title"
-                className="glossary-sidebar">
+                className="glossary-sidebar"
+                ref={(div) => {
+                    sidebarRef = div;
+                }}>
                 <div
                     id="glossary-sidebar-header"
-                    className="glossary-header-wrapper">
+                    className="glossary-header-wrapper"
+                    ref={(div) => {
+                        sidebarHeaderRef = div;
+                    }}>
                     <GlossaryHeader
                         {...props}
                         closeGlossary={closeGlossary} />
