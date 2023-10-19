@@ -1,8 +1,4 @@
 // slide in animation
-@import "../../lib/bourbon/css3/animation";
-@import "../../lib/bourbon/settings/prefixer";
-@import "../../lib/bourbon/addons/prefixer";
-
 @keyframes slidein {
     0% {
         transform: translate(300px, 0);
@@ -19,12 +15,20 @@
     100% {
         transform: translate(300px, 0);
     }
-}  
-
-.glossary-slide-enter, .glossary-slide-enter-active {
-    @include animation(slidein 0.5s ease-in forwards);
 }
 
-.glossary-slide-exit, .glossary-slide-exit-active {
-    @include animation(slideout 0.5s ease-in forwards);
+.glossary-slide-enter {
+    transform: translate(300px, 0);
+}
+
+.glossary-slide-enter-active {
+    @include animation(slidein .5s ease-in forwards);
+}
+
+.glossary-slide-exit {
+    transform: translate(0, 0);
+}
+
+.glossary-slide-exit-active {
+    @include animation(slideout .5s ease-in forwards);
 }

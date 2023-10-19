@@ -15,8 +15,27 @@ const propTypes = {
 
 const AnimatedGlossaryWrapper = (props) => {
     const [zIndexClass, setZIndexClass] = useState(null);
+    const [content, setContent] = useState(null);
 
     const { lastOpenedSlideout } = useSelector((state) => state.slideouts);
+
+    useEffect(() => {
+        if (props.glossary.display) {
+            setTimeout(() => {
+                setContent(
+                    <CSSTransition
+                        classNames="glossary-slide"
+                        timeout={{ enter: 500, exit: 500 }}>
+                        <Glossary {...props} zIndexClass={zIndexClass} />
+                    </CSSTransition>
+                );
+            }, 1);
+        }
+        else {
+            setContent(null);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.glossary.display]);
 
     useEffect(() => {
         setZIndexClass(lastOpenedSlideout === 'glossary' ? 'z-index-plus-one' : 'z-index');
@@ -25,14 +44,7 @@ const AnimatedGlossaryWrapper = (props) => {
     return (
         <div className="usa-da-glossary-animations">
             <TransitionGroup>
-                {props.glossary.display && (
-                    <CSSTransition
-                        classNames="glossary-slide"
-                        timeout={{ enter: 500, exit: 500 }}
-                        exit>
-                        <Glossary {...props} zIndexClass={zIndexClass} />
-                    </CSSTransition>
-                )}
+                {content}
             </TransitionGroup>
         </div>
     );
@@ -40,4 +52,3 @@ const AnimatedGlossaryWrapper = (props) => {
 
 AnimatedGlossaryWrapper.propTypes = propTypes;
 export default AnimatedGlossaryWrapper;
-
